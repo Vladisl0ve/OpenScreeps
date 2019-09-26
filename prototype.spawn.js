@@ -33,9 +33,40 @@ StructureSpawn.prototype.createCustomCreep =
   };
 
 StructureSpawn.prototype.createMinerCreep =
-  function(name, idSource) {
-    return this.createCreep([WORK, WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE], name, {
-      role: 'miner',
-      sourceId: sourceId
+  function(name, energy, idSource) {
+
+    var numberOfParts = Math.floor(energy / 250);
+    var body = [];
+    for (let i = 0; i < numberOfParts * 2; i++) {
+      body.push(WORK);
+    }
+    for (let i = 0; i < numberOfParts; i++) {
+      body.push(MOVE);
+    }
+
+    return this.spawnCreep(body, name, {
+      memory: {
+        role: 'miner',
+        idSource: idSource
+      }
     });
-  }
+  };
+
+StructureSpawn.prototype.createLorryCreep =
+  function(name, energy) {
+    var numberOfParts = Math.floor(energy / 150);
+    var body = [];
+    for (let i = 0; i < numberOfParts * 2; i++) {
+      body.push(CARRY);
+    }
+    for (let i = 0; i < numberOfParts; i++) {
+      body.push(MOVE);
+    }
+
+    return this.spawnCreep(body, name, {
+      memory: {
+        role: 'lorry',
+        isDelivering: true
+      }
+    });
+  };
