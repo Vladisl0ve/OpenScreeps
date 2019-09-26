@@ -1,10 +1,11 @@
 module.exports = {
 
   run: function(creep) {
-    const container = creep.pos.findClosestByPath(FIND_STRUCTURES, {
-      filter: s => s.structureType == STRUCTURE_CONTAINER &&
-        s.store[RESOURCE_ENERGY] > 0
-    });
+    let source = Game.getObjectById(creep.memory.idSource);
+    // find container next to source
+    let container = source.pos.findInRange(FIND_STRUCTURES, 1, {
+      filter: s => s.structureType == STRUCTURE_CONTAINER
+    })[0];
     const structure = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
       filter: (s) => (s.structureType == STRUCTURE_TOWER ||
           s.structureType == STRUCTURE_SPAWN ||

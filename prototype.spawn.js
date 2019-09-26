@@ -53,7 +53,7 @@ StructureSpawn.prototype.createMinerCreep =
   };
 
 StructureSpawn.prototype.createLorryCreep =
-  function(name, energy) {
+  function(name, energy, idSource) {
     var numberOfParts = Math.floor(energy / 150);
     var body = [];
     for (let i = 0; i < numberOfParts * 2; i++) {
@@ -66,7 +66,8 @@ StructureSpawn.prototype.createLorryCreep =
     return this.spawnCreep(body, name, {
       memory: {
         role: 'lorry',
-        isDelivering: true
+        isDelivering: true,
+        idSource: idSource
       }
     });
   };

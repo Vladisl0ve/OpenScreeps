@@ -72,7 +72,7 @@ module.exports.loop = function() {
         Game.spawns['Spawn1'].memory.screepsName++;
       }
     } else if (lorriesInRoom < 1) {
-      if (Game.spawns['Spawn1'].createLorryCreep('Lorry' + Game.spawns['Spawn1'].memory.screepsName, maxEnergy) == OK) {
+      if (Game.spawns['Spawn1'].createLorryCreep('Lorry' + Game.spawns['Spawn1'].memory.screepsName, maxEnergy,nextMinersID) == OK) {
         Game.spawns['Spawn1'].memory.screepsName++;
       }
 
@@ -98,10 +98,10 @@ module.exports.loop = function() {
         Game.spawns['Spawn1'].memory.screepsName++;
       }
     } else if (lorriesInRoom < 2) {
-      if (Game.spawns['Spawn1'].createLorryCreep('Lorry' + Game.spawns['Spawn1'].memory.screepsName, maxEnergy) == OK) {
+      if (Game.spawns['Spawn1'].createLorryCreep('Lorry' + Game.spawns['Spawn1'].memory.screepsName, maxEnergy, nextMinersID) == OK) {
         Game.spawns['Spawn1'].memory.screepsName++;
       }
-    } else if (upgradersInRoom < 1) {
+    } else if (upgradersInRoom < 3) {
       if (Game.spawns['Spawn1'].createCustomCreep('Upgrader' + Game.spawns['Spawn1'].memory.screepsName, maxEnergy, 'upgrader') == OK) {
         Game.spawns['Spawn1'].memory.screepsName++;
       }
