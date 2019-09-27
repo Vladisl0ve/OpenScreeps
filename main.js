@@ -42,7 +42,6 @@ module.exports.loop = function() {
     if (creep.memory.role == 'lorry')
       lorriesInRoom++;
   }
-
   if (minersInRoom == 1) {
     for (creep of creepsInRoom) {
       if (creep.memory.role == 'miner') {
@@ -78,6 +77,7 @@ module.exports.loop = function() {
       }
 
     }
+
     // else if (upgradersInRoom < 2) {
     //   if (Game.spawns['Spawn1'].createCustomCreep('Upgrader' + Game.spawns['Spawn1'].memory.screepsName, maxEnergy, 'upgrader') == OK) {
     //     Game.spawns['Spawn1'].memory.screepsName++;

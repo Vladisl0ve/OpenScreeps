@@ -2,6 +2,7 @@ module.exports = {
 
   run: function(creep) {
     let source = Game.getObjectById(creep.memory.idSource);
+    const storage = creep.room.storage;
     let droppedEnergy = source.pos.findInRange(FIND_DROPPED_RESOURCES, 1, {
       filter: s => s.resourceType == RESOURCE_ENERGY
     });
@@ -44,7 +45,8 @@ module.exports = {
       }
 
     } else if (_.sum(creep.carry) == creep.carryCapacity || !creep.memory.isDelivering) {
-
+      if (!structure && storage)
+        structure = storage
       if (creep.transfer(structure, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
         creep.moveTo(structure)
       }
