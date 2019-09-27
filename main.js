@@ -102,11 +102,11 @@ module.exports.loop = function() {
       if (Game.spawns['Spawn1'].createLorryCreep('Lorry' + Game.spawns['Spawn1'].memory.screepsName, maxEnergy, nextMinersID) == OK) {
         Game.spawns['Spawn1'].memory.screepsName++;
       }
-    } else if (upgradersInRoom < 6) {
+    } else if (upgradersInRoom < 4) {
       if (Game.spawns['Spawn1'].createCustomCreep('Upgrader' + Game.spawns['Spawn1'].memory.screepsName, maxEnergy, 'upgrader') == OK) {
         Game.spawns['Spawn1'].memory.screepsName++;
       }
-    } else if (buildersInRoom < 1) {
+    } else if (buildersInRoom < 3) {
       if (Game.spawns['Spawn1'].createCustomCreep('Builder' + Game.spawns['Spawn1'].memory.screepsName, maxEnergy, 'builder') == OK) {
         Game.spawns['Spawn1'].memory.screepsName++;
       }
