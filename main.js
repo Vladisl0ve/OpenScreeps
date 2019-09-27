@@ -53,17 +53,18 @@ module.exports.loop = function() {
     }
   }
 
+
   if (minersInRoom < 1 || lorriesInRoom < 1)
     status = false; // bad conditions of life
   else
     status = true; // fine conditions of life
 
-    //console.log(nextMinersID)
+  //console.log(nextMinersID)
   if (!status) {
     maxEnergy = room.energyAvailable
 
     //console.log(harvestersInRoom)
-    if (harvestersInRoom < 2) {
+    if (harvestersInRoom < 1) {
       if (Game.spawns['Spawn1'].createCustomCreep('Harvester' + Game.spawns['Spawn1'].memory.screepsName, maxEnergy, 'harvester') == OK) {
         Game.spawns['Spawn1'].memory.screepsName++;
       }
@@ -72,7 +73,7 @@ module.exports.loop = function() {
         Game.spawns['Spawn1'].memory.screepsName++;
       }
     } else if (lorriesInRoom < 1) {
-      if (Game.spawns['Spawn1'].createLorryCreep('Lorry' + Game.spawns['Spawn1'].memory.screepsName, maxEnergy,nextMinersID) == OK) {
+      if (Game.spawns['Spawn1'].createLorryCreep('Lorry' + Game.spawns['Spawn1'].memory.screepsName, maxEnergy, nextMinersID) == OK) {
         Game.spawns['Spawn1'].memory.screepsName++;
       }
 
@@ -101,7 +102,7 @@ module.exports.loop = function() {
       if (Game.spawns['Spawn1'].createLorryCreep('Lorry' + Game.spawns['Spawn1'].memory.screepsName, maxEnergy, nextMinersID) == OK) {
         Game.spawns['Spawn1'].memory.screepsName++;
       }
-    } else if (upgradersInRoom < 3) {
+    } else if (upgradersInRoom < 6) {
       if (Game.spawns['Spawn1'].createCustomCreep('Upgrader' + Game.spawns['Spawn1'].memory.screepsName, maxEnergy, 'upgrader') == OK) {
         Game.spawns['Spawn1'].memory.screepsName++;
       }
