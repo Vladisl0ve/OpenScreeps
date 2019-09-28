@@ -1,12 +1,13 @@
-/*
- * Module code goes here. Use 'module.exports' to export things:
- * module.exports.thing = 'a thing';
- *
- * You can import it from another modules like this:
- * var mod = require('prototype.creep');
- * mod.thing == 'a thing'; // true
- */
-
-module.exports = {
-
+var roles = {
+  harvester: require('role.harvester'),
+  upgrader: require('role.upgrader'),
+  builder: require('role.builder'),
+  repair: require('role.repair'),
+  miner: require('role.miner'),
+  lorry: require('role.lorry')
 };
+
+Creep.prototype.runRole =
+  function() {
+    roles[this.memory.role].run(this);
+  };

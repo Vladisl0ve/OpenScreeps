@@ -14,6 +14,7 @@ module.exports = {
     if (building == null) {
       let repair = require('role.repair');
       repair.run(creep);
+      return;
     }
     if ((!storage || storage.store[RESOURCE_ENERGY] < creep.carryCapacity) && creep.memory.isDelivering) {
       if (container.store[RESOURCE_ENERGY] < creep.carryCapacity && creep.memory.isDelivering) {
