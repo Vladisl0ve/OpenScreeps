@@ -17,6 +17,7 @@ module.exports.loop = function() {
 
   let status = false;
   let nextMinersID = '5bbcaac09099fc012e632237';
+  let nextLorrysID = '5bbcaac09099fc012e632237';
 
   let room = Game.spawns.Spawn1.room;
   let creepsInRoom = room.find(FIND_MY_CREEPS);
@@ -52,6 +53,16 @@ module.exports.loop = function() {
     }
   }
 
+  if (lorriesInRoom == 1) {
+    for (creep of creepsInRoom) {
+      if (creep.memory.role == 'lorry') {
+        if (creep.memory.idSource == '5bbcaac09099fc012e632237') {
+          nextLorrysID = '5bbcaac09099fc012e632236'
+        }
+      }
+    }
+  }
+
 
   if (minersInRoom < 1 || lorriesInRoom < 1)
     status = false; // bad conditions of life
@@ -72,7 +83,7 @@ module.exports.loop = function() {
         Game.spawns['Spawn1'].memory.screepsName++;
       }
     } else if (lorriesInRoom < 1) {
-      if (Game.spawns['Spawn1'].createLorryCreep('Lorry' + Game.spawns['Spawn1'].memory.screepsName, maxEnergy, nextMinersID) == OK) {
+      if (Game.spawns['Spawn1'].createLorryCreep('Lorry' + Game.spawns['Spawn1'].memory.screepsName, maxEnergy, nextLorrysID) == OK) {
         Game.spawns['Spawn1'].memory.screepsName++;
       }
 
@@ -99,14 +110,14 @@ module.exports.loop = function() {
         Game.spawns['Spawn1'].memory.screepsName++;
       }
     } else if (lorriesInRoom < 2) {
-      if (Game.spawns['Spawn1'].createLorryCreep('Lorry' + Game.spawns['Spawn1'].memory.screepsName, maxEnergy, nextMinersID) == OK) {
+      if (Game.spawns['Spawn1'].createLorryCreep('Lorry' + Game.spawns['Spawn1'].memory.screepsName, maxEnergy, nextLorrysID) == OK) {
         Game.spawns['Spawn1'].memory.screepsName++;
       }
     } else if (upgradersInRoom < 4) {
       if (Game.spawns['Spawn1'].createCustomCreep('Upgrader' + Game.spawns['Spawn1'].memory.screepsName, maxEnergy, 'upgrader') == OK) {
         Game.spawns['Spawn1'].memory.screepsName++;
       }
-    } else if (buildersInRoom < 3) {
+    } else if (buildersInRoom < 0) {
       if (Game.spawns['Spawn1'].createCustomCreep('Builder' + Game.spawns['Spawn1'].memory.screepsName, maxEnergy, 'builder') == OK) {
         Game.spawns['Spawn1'].memory.screepsName++;
       }

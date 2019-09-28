@@ -17,7 +17,7 @@ module.exports = {
     }
     if ((!storage || storage.store[RESOURCE_ENERGY] < creep.carryCapacity) && creep.memory.isDelivering) {
       if (container.store[RESOURCE_ENERGY] < creep.carryCapacity && creep.memory.isDelivering) {
-        if (!droppedEnergy) {
+        if (!droppedEnergy[0]) {
           let idNextSource = null;
           if (creep.memory.idSource == '5bbcaac09099fc012e632237')
             idNextSource = '5bbcaac09099fc012e632236'
@@ -27,7 +27,7 @@ module.exports = {
           let nextContainer = Game.getObjectById(idNextSource).pos.findInRange(FIND_STRUCTURES, 1, {
             filter: s => s.structureType == STRUCTURE_CONTAINER
           })[0];
-
+        //  console.log(nextContainer.store[RESOURCE_ENERGY])
           if (nextContainer.store[RESOURCE_ENERGY] > creep.carryCapacity) {
             container = nextContainer
           }
