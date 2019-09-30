@@ -12,15 +12,20 @@ module.exports = {
       filter: s => s.structureType == STRUCTURE_CONTAINER
     })[0];
 
+    let isDoubleSourced = false;
+    let sourcesInRoom = creep.room.find(FIND_SOURCES);
+
+    if (sourcesInRoom[1])
+      isDoubleSourced = true;
 
     if ((!storage || storage.store[RESOURCE_ENERGY] < creep.carryCapacity) && creep.memory.isDelivering) {
-      if (container.store[RESOURCE_ENERGY] < creep.carryCapacity && creep.memory.isDelivering) {
+      if (container && container.store[RESOURCE_ENERGY] < creep.carryCapacity && creep.memory.isDelivering) {
         if (!droppedEnergy) {
           let idNextSource = null;
-          if (creep.memory.idSource == '5bbcaac09099fc012e632237')
-            idNextSource = '5bbcaac09099fc012e632236'
+          if (isDoubleSourced && creep.memory.idSource == sourcesInRoom[0].id)
+            idNextSource = sourcesInRoom[1].id
           else
-            idNextSource = '5bbcaac09099fc012e632237'
+            idNextSource = sourcesInRoom[0].id
 
           let nextContainer = Game.getObjectById(idNextSource).pos.findInRange(FIND_STRUCTURES, 1, {
             filter: s => s.structureType == STRUCTURE_CONTAINER

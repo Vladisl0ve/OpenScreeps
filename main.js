@@ -19,7 +19,7 @@ module.exports.loop = function() {
     tower.defend();
   }
 
-  //SPAWNS'S WORK STARTS 
+  //SPAWNS'S WORK STARTS
   for (let spawnName in Game.spawns) {
     Game.spawns[spawnName].usualWork();
   }
@@ -27,5 +27,4 @@ module.exports.loop = function() {
   if (Game.cpu.bucket <= 1000) {
     Game.notify('Bucket is under attack: ' + Game.cpu.bucket)
   }
-
 }

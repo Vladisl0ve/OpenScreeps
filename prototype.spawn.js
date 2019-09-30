@@ -5,11 +5,11 @@ StructureSpawn.prototype.usualWork =
     let status = false;
     let isDoubleSourced = false;
     let sourcesInRoom = room.find(FIND_SOURCES);
-
-    if (sourcesInRoom[1])
+    let nextSourceID = sourcesInRoom[0].id;
+    if (sourcesInRoom[1]) {
       isDoubleSourced = true;
-
-    let nextSourceID = sourcesInRoom[1].id;
+      nextSourceID = sourcesInRoom[1].id;
+    }
 
     let creepsInRoom = room.find(FIND_MY_CREEPS);
     let harvestersInRoom = 0;
@@ -56,51 +56,55 @@ StructureSpawn.prototype.usualWork =
       }
     }
 
-    if (isDoubleSourced) {
-      if (minersInRoom < 1 || lorriesInRoom < 1)
-        status = false; // bad conditions of life
-      else
-        status = true; // fine conditions of life
+    if (minersInRoom < 1 || lorriesInRoom < 1)
+      status = false; // bad conditions of life
+    else
+      status = true; // fine conditions of life
+
+
+
+    let idSourceAvailable = 0;
+    if (this.memory.screepsName % 2 == 0) {
+      idSourceAvailable = sourcesInRoom[0].id
     } else {
-      if (minersInRoom < 1 && lorriesInRoom < 1)
-        status = false; // bad conditions of life
-      else
-        status = true; // fine conditions of life
+      idSourceAvailable = nextSourceID
     }
+    //  console.log(minersInRoom < 1 || lorriesInRoom < 1)
 
     if (!status) {
       maxEnergy = room.energyAvailable
 
-      if (harvestersInRoom < 1) {
-        if (this.createCustomCreep('Harvester' + this.memory.screepsName + room.name, maxEnergy, 'harvester') == OK) {
+      if (harvestersInRoom < 1 && minersInRoom < 1 && lorriesInRoom < 1) {
+        if (this.createCustomCreep('Harvester' + this.memory.screepsName + '|' + room.name, maxEnergy, 'harvester', nextSourceID) == OK) {
           this.memory.screepsName++;
         }
       } else if (minersInRoom < 1) {
-        if (this.createMinerCreep('Miner' + this.memory.screepsName + room.name, maxEnergy, nextSourceID) == OK) {
+        if (this.createMinerCreep('Miner' + this.memory.screepsName + '|' + room.name, maxEnergy, nextSourceID) == OK) {
           this.memory.screepsName++;
         }
       } else if (lorriesInRoom < 1) {
-        if (this.createLorryCreep('Lorry' + this.memory.screepsName + room.name, maxEnergy, nextSourceID) == OK) {
+        if (this.createLorryCreep('Lorry' + this.memory.screepsName + '|' + room.name, maxEnergy, nextSourceID) == OK) {
           this.memory.screepsName++;
         }
 
       }
 
     } else {
+
       if (minersInRoom < 2 && isDoubleSourced) {
-        if (this.createMinerCreep('Miner' + this.memory.screepsName + room.name, maxEnergy, nextSourceID) == OK) {
+        if (this.createMinerCreep('Miner' + this.memory.screepsName + '|' + room.name, maxEnergy, nextSourceID) == OK) {
           this.memory.screepsName++;
         }
       } else if (lorriesInRoom < 2 && isDoubleSourced) {
-        if (this.createLorryCreep('Lorry' + this.memory.screepsName + room.name, maxEnergy, nextSourceID) == OK) {
+        if (this.createLorryCreep('Lorry' + this.memory.screepsName + '|' + room.name, maxEnergy, nextSourceID) == OK) {
           this.memory.screepsName++;
         }
-      } else if (upgradersInRoom < 1) {
-        if (this.createCustomCreep('Upgrader' + this.memory.screepsName + room.name, maxEnergy, 'upgrader') == OK) {
+      } else if (upgradersInRoom < 3) {
+        if (this.createCustomCreep('Upgrader' + this.memory.screepsName + '|' + room.name, maxEnergy, 'upgrader', nextSourceID) == OK) {
           this.memory.screepsName++;
         }
-      } else if (buildersInRoom < 2) {
-        if (this.createCustomCreep('Builder' + this.memory.screepsName + room.name, maxEnergy, 'builder') == OK) {
+      } else if (buildersInRoom < 1) {
+        if (this.createCustomCreep('Builder' + this.memory.screepsName + '|' + room.name, maxEnergy, 'builder', nextSourceID) == OK) {
           this.memory.screepsName++;
         }
       }
@@ -109,7 +113,7 @@ StructureSpawn.prototype.usualWork =
 
 
 StructureSpawn.prototype.createCustomCreep =
-  function(name, energy, roleName) {
+  function(name, energy, roleName, idSourceAvailable) {
     // create a balanced body as big as possible with the given energy
     var numberOfParts = Math.floor(energy / 200);
     // make sure the creep is not too big (more than 50 parts)
@@ -125,12 +129,6 @@ StructureSpawn.prototype.createCustomCreep =
       body.push(MOVE);
     }
 
-    let idSourceAvailable = 0;
-    if (Game.spawns.Spawn1.memory.screepsName % 2 == 0) {
-      idSourceAvailable = '5bbcaac09099fc012e632237'
-    } else {
-      idSourceAvailable = '5bbcaac09099fc012e632236'
-    }
 
     return this.spawnCreep(body, name, {
       memory: {
@@ -141,7 +139,71 @@ StructureSpawn.prototype.createCustomCreep =
       }
     })
   };
+StructureSpawn.prototype.createPioneerCreep =
+  function(name, energy, roleName, idSourceAvailable, nameRoom) {
+    //5bbcaab59099fc012e6320af
 
+    //Game.spawns.Spawn1.createPioneerCreep('Voyager2', 1000, 'pioneer', '5bbcaab59099fc012e6320af', 'W42N43')
+
+    // Game.spawns.Spawn1.createClaimerCreep('Cowboy2', 1400, 'claimer', '5bbcaab59099fc012e6320af', 'W42N43')
+
+
+    // create a balanced body as big as possible with the given energy
+    var numberOfParts = Math.floor(energy / 200) - 1;
+    // make sure the creep is not too big (more than 50 parts)
+    numberOfParts = Math.min(numberOfParts, Math.floor(50 / 3));
+    var body = [];
+    body.push(CLAIM)
+    for (let i = 0; i < numberOfParts; i++) {
+      body.push(WORK);
+    }
+    for (let i = 0; i < numberOfParts; i++) {
+      body.push(CARRY);
+    }
+    for (let i = 0; i < numberOfParts; i++) {
+      body.push(MOVE);
+    }
+
+
+    return this.spawnCreep(body, name, {
+      memory: {
+        role: roleName,
+        isDelivering: true,
+        idSource: idSourceAvailable,
+        nameRoom: nameRoom,
+        path: null
+      }
+    })
+  };
+
+StructureSpawn.prototype.createClaimerCreep =
+  function(name, energy, roleName, idSourceAvailable, nameRoom) {
+    // create a balanced body as big as possible with the given energy
+    var numberOfParts = Math.floor(energy / 200) - 1;
+    // make sure the creep is not too big (more than 50 parts)
+    numberOfParts = Math.min(numberOfParts, Math.floor(50 / 3));
+    var body = [];
+    for (let i = 0; i < numberOfParts; i++) {
+      body.push(WORK);
+    }
+    for (let i = 0; i < numberOfParts; i++) {
+      body.push(CARRY);
+    }
+    for (let i = 0; i < numberOfParts; i++) {
+      body.push(MOVE);
+    }
+
+
+    return this.spawnCreep(body, name, {
+      memory: {
+        role: roleName,
+        isDelivering: true,
+        idSource: idSourceAvailable,
+        nameRoom: nameRoom,
+        path: null
+      }
+    })
+  };
 StructureSpawn.prototype.createMinerCreep =
   function(name, energy, idSource) {
 
@@ -149,6 +211,10 @@ StructureSpawn.prototype.createMinerCreep =
     var body = [];
     for (let i = 0; i < numberOfParts * 2; i++) {
       body.push(WORK);
+      if (i == 5) {
+        numberOfParts = 5;
+        break;
+      }
     }
     for (let i = 0; i < numberOfParts; i++) {
       body.push(MOVE);

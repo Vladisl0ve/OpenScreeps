@@ -9,7 +9,7 @@ module.exports = {
     })[0];
 
     // if creep is on top of the container
-    if (creep.pos.isEqualTo(container.pos)) {
+    if (container && creep.pos.isEqualTo(container.pos)) {
       // harvest source
       creep.harvest(source);
     }
