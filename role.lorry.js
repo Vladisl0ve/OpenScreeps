@@ -22,7 +22,7 @@ module.exports = {
     if (sourcesInRoom[1])
       isDoubleSourced = true;
 
-    if (container.store[RESOURCE_ENERGY] < creep.carryCapacity && creep.memory.isDelivering) {
+    if (container && container.store[RESOURCE_ENERGY] < creep.carryCapacity && creep.memory.isDelivering) {
       if (!droppedEnergy) {
         let idNextSource = null;
         if (isDoubleSourced && creep.memory.idSource == sourcesInRoom[0].id)
