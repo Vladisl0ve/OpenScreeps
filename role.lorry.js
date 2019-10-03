@@ -66,11 +66,11 @@ module.exports = {
         creep.moveTo(structure)
       }
 
-      if (_.sum(creep.carry) == 0) {
+      if (_.sum(creep.carry) == 0)
         creep.memory.isDelivering = true;
-      } else {
+      else
         creep.memory.isDelivering = false;
-      }
+
     }
   }
 };

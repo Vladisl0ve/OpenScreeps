@@ -17,7 +17,7 @@ module.exports = {
     if (sourcesInRoom[1])
       isDoubleSourced = true;
 
-  //  let nextSourceID = sourcesInRoom[1].id;
+    //  let nextSourceID = sourcesInRoom[1].id;
 
 
     if (building == null) {
@@ -38,7 +38,7 @@ module.exports = {
           let nextContainer = Game.getObjectById(idNextSource).pos.findInRange(FIND_STRUCTURES, 1, {
             filter: s => s.structureType == STRUCTURE_CONTAINER
           })[0];
-        //  console.log(nextContainer.store[RESOURCE_ENERGY])
+          //  console.log(nextContainer.store[RESOURCE_ENERGY])
           if (nextContainer && nextContainer.store[RESOURCE_ENERGY] > creep.carryCapacity) {
             container = nextContainer
           }
@@ -60,7 +60,14 @@ module.exports = {
         //console.log(creepsInRoom.length)
       }
 
-    } else if (_.sum(creep.carry) == creep.carryCapacity || !creep.memory.isDelivering) {
+    } else if (!container && _.sum(creep.carry) != creep.carryCapacity && creep.memory.isDelivering) {
+      if (creep.harvest(source) == ERR_NOT_IN_RANGE) {
+        creep.moveTo(source)
+        //console.log(creepsInRoom.length)
+      }
+    }
+
+    if (_.sum(creep.carry) == creep.carryCapacity || !creep.memory.isDelivering) {
 
       if (creep.build(building) == ERR_NOT_IN_RANGE) {
         creep.moveTo(building);

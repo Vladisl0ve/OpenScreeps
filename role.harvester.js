@@ -9,16 +9,19 @@ module.exports = {
         s.energy < s.energyCapacity
     });
 
-    if (source && _.sum(creep.carry) != creep.carryCapacity) {
+    if (source && _.sum(creep.carry) != creep.carryCapacity && creep.memory.isDelivering) {
       if (creep.harvest(source) == ERR_NOT_IN_RANGE) {
         creep.moveTo(source)
       }
 
-    } else if (_.sum(creep.carry) == creep.carryCapacity) {
-
+    } else if (_.sum(creep.carry) == creep.carryCapacity || !creep.memory.isDelivering) {
       if (creep.transfer(structure, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
         creep.moveTo(structure)
       }
     }
+    if (_.sum(creep.carry) == 0)
+      creep.memory.isDelivering = true;
+    else
+      creep.memory.isDelivering = false;
   }
 };

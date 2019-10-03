@@ -99,7 +99,7 @@ StructureSpawn.prototype.usualWork =
         if (this.createLorryCreep('Lorry' + this.memory.screepsName + '|' + room.name, maxEnergy, nextSourceID) == OK) {
           this.memory.screepsName++;
         }
-      } else if (upgradersInRoom < 3) {
+      } else if (upgradersInRoom < 2) {
         if (this.createCustomCreep('Upgrader' + this.memory.screepsName + '|' + room.name, maxEnergy, 'upgrader', nextSourceID) == OK) {
           this.memory.screepsName++;
         }
