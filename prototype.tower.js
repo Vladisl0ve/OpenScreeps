@@ -9,7 +9,6 @@ StructureTower.prototype.defend =
     var wounded = this.pos.findClosestByRange(FIND_MY_CREEPS, {
       filter: (s) => s.hits < s.hitsMax
     });
-    //if o
     // if one is found...
     if (target != undefined && target.owner.username != "M2Shawning") {
       // ...FIRE!
